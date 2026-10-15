@@ -9,7 +9,7 @@
 - 記事管理画面：[Sveltia CMS](https://atmos-dining.github.io/hiyori-site/admin/)
 - 公開履歴・エラー確認：[GitHub Actions](https://github.com/atmos-dining/hiyori-site/actions)
 
-GitHub Pagesの公開元はGitHub Actionsに設定済みです。`admin/config.yml` は上記リポジトリへ接続し、既存の共通OAuthプロキシを使用します。`main` へのpushでページ生成とPagesへの公開を行う構成です。**現在は初回デプロイ準備中です。公開の成功、CMSへのログイン、CMSからの記事保存の成功はまだ確認していません。**
+GitHub Pagesの公開元はGitHub Actionsに設定済みです。`admin/config.yml` は上記リポジトリへ接続し、既存の共通OAuthプロキシを使用します。`main` へのpushでページ生成とPagesへの公開を行う構成です。**2026年10月15日、公開URLでの表示、CMSへのGitHubログイン、既存記事の保存、保存後の自動公開まで確認済みです。**
 
 GitHubのURLは `noindex` を付けた公開準備用です。これは検索掲載を抑える指定であり、アクセス制限ではありません。ひより用の独自ドメインは未設定・未定です。この作業ではドメインの取得・契約は行っていません。
 
