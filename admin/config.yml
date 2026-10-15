@@ -1,0 +1,36 @@
+# ひより専用。共通OAuthプロキシは他店舗と同じ設定です。
+backend:
+  name: github
+  repo: atmos-dining/hiyori-site
+  branch: main
+  base_url: https://sveltia-cms-auth.atmos-nextgen-team.workers.dev
+
+site_url: https://atmos-dining.github.io/hiyori-site
+display_url: https://atmos-dining.github.io/hiyori-site
+locale: ja
+
+media_folder: images
+public_folder: /images
+
+collections:
+  - name: blog
+    label: ひより便り
+    files:
+      - name: posts
+        label: 全投稿一覧
+        file: blog/posts.json
+        fields:
+          - name: posts
+            label: 投稿リスト
+            widget: list
+            add_to_top: true
+            fields:
+              - {name: slug, label: 記事のURL名, widget: string, pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "半角英小文字・数字・ハイフンで入力してください"], hint: "例：autumn-menu。ほかの記事と重複しない名前にしてください。公開後は変更しないでください。"}
+              - {name: title, label: タイトル, widget: string}
+              - {name: date, label: 日付, widget: datetime, format: "YYYY-MM-DD", time_format: false}
+              - {name: excerpt, label: 概要, widget: text}
+              - {name: image, label: 画像, widget: image, required: false}
+              - {name: imageAlt, label: 先頭画像の説明, widget: string, required: false, hint: "写真に写っている内容を短く説明してください。未入力の場合は記事タイトルを使用します。"}
+              - {name: imageCaption, label: 先頭画像のキャプション, widget: string, required: false, hint: "先頭の写真の下に表示する説明文です。"}
+              - {name: tags, label: タグ, widget: list}
+              - {name: body, label: 本文, widget: markdown, hint: "本文にも写真を挿入できます。images に保存した画像を選び、画像タイトルを入力すると写真の下にキャプションとして表示されます。"}

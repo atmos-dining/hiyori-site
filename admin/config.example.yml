@@ -1,0 +1,33 @@
+# 公開先が決まったら config.yml に変更し、repo を実際のリポジトリ名に置き換えてください。
+# 未設定の間は管理画面を読み込みません。共通 OAuth プロキシの変更は不要です。
+backend:
+  name: github
+  repo: atmos-dining/REPOSITORY_NAME
+  branch: main
+  base_url: https://sveltia-cms-auth.atmos-nextgen-team.workers.dev
+
+media_folder: images
+public_folder: /images
+
+collections:
+  - name: blog
+    label: ひより便り
+    files:
+      - name: posts
+        label: 全投稿一覧
+        file: blog/posts.json
+        fields:
+          - name: posts
+            label: 投稿リスト
+            widget: list
+            add_to_top: true
+            fields:
+              - {name: slug, label: Slug, widget: string}
+              - {name: title, label: タイトル, widget: string}
+              - {name: date, label: 日付, widget: datetime, format: "YYYY-MM-DD", time_format: false}
+              - {name: excerpt, label: 概要, widget: text}
+              - {name: image, label: 画像, widget: image, required: false}
+              - {name: imageAlt, label: 先頭画像の説明, widget: string, required: false, hint: "写真に写っている内容を短く説明してください。未入力の場合は記事タイトルを使用します。"}
+              - {name: imageCaption, label: 先頭画像のキャプション, widget: string, required: false, hint: "先頭の写真の下に表示する説明文です。"}
+              - {name: tags, label: タグ, widget: list}
+              - {name: body, label: 本文, widget: markdown, hint: "本文にも写真を挿入できます。images に保存した画像を選び、画像タイトルを入力すると写真の下にキャプションとして表示されます。"}

@@ -1,0 +1,10 @@
+.DS_Store
+._*
+__pycache__/
+*.pyc
+*.log
+
+_site/
+AGENTS.md
+.env
+.env.*

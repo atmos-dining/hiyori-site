@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="site-base-path" content="">
+  <script src="../site-paths.js"></script>
+  <title>ブログ管理画面｜肴とお野菜 ひより</title>
+  <style>
+    body{margin:0;background:#f2efe5;color:#253b36;font-family:system-ui,sans-serif;line-height:1.9}
+    main{max-width:640px;margin:10vh auto;padding:32px}
+    h1{font-size:24px}p{font-size:14px}code{overflow-wrap:anywhere}a{color:inherit}
+  </style>
+</head>
+<body>
+  <main id="setup-message" aria-live="polite">
+    <h1>ひより便り 管理画面</h1>
+    <p id="setup-status">管理画面の接続設定を確認しています。</p>
+    <div id="setup-help" hidden>
+      <p>公開先の準備ができたら、<code>admin/config.example.yml</code> を <code>admin/config.yml</code> に変更し、<code>backend.repo</code> に公開先の GitHub リポジトリ名を設定してください。</p>
+      <p>設定後、このページを読み直すとブログ管理画面が開きます。</p>
+    </div>
+    <p><a id="site-home" href="../">ひよりのサイトへ戻る</a></p>
+  </main>
+  <script>
+    (async () => {
+      const status = document.getElementById('setup-status');
+      document.getElementById('site-home').href = window.HiyoriSite?.url('/') || '../';
+      const help = document.getElementById('setup-help');
+      function showSetup() {
+        status.textContent = '管理画面はまだ接続されていません。';
+        help.hidden = false;
+      }
+      try {
+        const response = await fetch('./config.yml', { cache: 'no-store' });
+        if (!response.ok) { showSetup(); return; }
+        const config = await response.text();
+        const match = config.match(/^\s+repo:\s*["']?([^"'\s#]+)["']?\s*(?:#.*)?$/m);
+        const repo = match ? match[1] : '';
+        if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repo) || /REPOSITORY_NAME|YOUR_REPO|PLACEHOLDER/i.test(repo)) {
+          showSetup(); return;
+        }
+        status.textContent = 'ブログ管理画面を開いています。';
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/@sveltia/cms@0.241.0/dist/sveltia-cms.js';
+        script.onerror = () => { status.textContent = '管理画面を読み込めませんでした。通信状況をご確認のうえ、もう一度お試しください。'; };
+        document.body.append(script);
+      } catch {
+        showSetup();
+      }
+    })();
+  </script>
+</body>
+</html>
