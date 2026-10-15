@@ -25,15 +25,24 @@
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   });
-  const noren = document.querySelector('.noren');
-  let ticking = false;
-  function scrollState() {
-    document.body.classList.toggle('scrolled', window.scrollY > 170);
-    if (noren && !reduceMotion.matches) noren.style.setProperty('--noren-shift', `${-Math.min(window.scrollY * .35, 330)}px`);
-    ticking = false;
+  // Only update navigation when crossing the threshold. The curtain is CSS-driven.
+  let scrolled;
+  function setScrolled(next) {
+    if (scrolled === next) return;
+    scrolled = next;
+    document.body.classList.toggle('scrolled', next);
   }
-  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(scrollState); } }, { passive: true });
-  scrollState();
+  const sentinel = document.querySelector('.scroll-sentinel');
+  if (sentinel && 'IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      const entry = entries[entries.length - 1];
+      setScrolled(!entry.isIntersecting && entry.boundingClientRect.bottom <= 0);
+    }).observe(sentinel);
+  } else {
+    const updateNavigation = () => setScrolled(window.scrollY > 170);
+    window.addEventListener('scroll', updateNavigation, { passive: true });
+    updateNavigation();
+  }
   if ('IntersectionObserver' in window && !reduceMotion.matches) {
     document.body.classList.add('motion-ready');
     const reveals = new IntersectionObserver(entries => entries.forEach(entry => {
@@ -45,9 +54,10 @@
   document.querySelectorAll('video[data-ambient-video]').forEach(video => {
     const button = video.parentElement.querySelector('[data-video-pause]');
     let manualPause = false;
+    let inView = !('IntersectionObserver' in window);
     const canAnimate = () => !reduceMotion.matches && !navigator.connection?.saveData;
     const play = () => {
-      if (!canAnimate() || manualPause || document.hidden) return;
+      if (!canAnimate() || manualPause || document.hidden || !inView) return;
       video.play().then(() => { video.classList.add('is-playing'); if (button) button.hidden = false; }).catch(() => {});
     };
     const syncButton = () => { if (button) { button.textContent = video.paused ? '▶' : 'Ⅱ'; button.setAttribute('aria-label', video.paused ? '動画を再生' : '動画を一時停止'); } };
@@ -55,9 +65,24 @@
     video.addEventListener('pause', syncButton);
     video.addEventListener('error', () => { video.classList.remove('is-playing'); if (button) button.hidden = true; });
     button?.addEventListener('click', () => { manualPause = !video.paused; if (manualPause) video.pause(); else video.play().catch(() => {}); });
-    if ('IntersectionObserver' in window) new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting ? play() : video.pause()), { threshold: .12 }).observe(video);
-    else play();
-    document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); else if (video.getBoundingClientRect().bottom > 0 && video.getBoundingClientRect().top < innerHeight) play(); });
+    if ('IntersectionObserver' in window) {
+      // Fetch once shortly before arrival; playback still waits until the video is visible.
+      const prepare = new IntersectionObserver(entries => {
+        if (!entries.some(entry => entry.isIntersecting) || !canAnimate()) return;
+        video.preload = 'auto';
+        video.load();
+        play();
+        prepare.disconnect();
+      }, { rootMargin: '700px 0px' });
+      prepare.observe(video);
+      new IntersectionObserver(entries => {
+        const entry = entries[entries.length - 1];
+        inView = entry.isIntersecting && entry.intersectionRatio >= .12;
+        if (inView) play();
+        else video.pause();
+      }, { threshold: [0, .12] }).observe(video);
+    } else play();
+    document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); else play(); });
     reduceMotion.addEventListener('change', () => { if (reduceMotion.matches) { video.pause(); video.classList.remove('is-playing'); if (button) button.hidden = true; } else play(); });
   });
   const roomData = {
