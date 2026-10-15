@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate static, crawlable pages using only Python's standard library."""
-import html, json, os, re
+import hashlib, html, json, os, re
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
@@ -14,6 +14,11 @@ indexable = indexable_env == 'true' if indexable_env is not None else cfg.get('i
 esc = html.escape
 map_url = esc(cfg['mapUrl'], quote=True)
 links = [('/', 'ひよりについて'), ('/menu.html', 'お料理'), ('/drink.html', 'お飲み物'), ('/space.html', 'お席と空間'), ('/access.html', 'ご来店案内')]
+
+def asset_url(name):
+    """Reload changed shared assets even when an in-app browser keeps its cache."""
+    version = hashlib.sha256((ROOT / name).read_bytes()).hexdigest()[:12]
+    return f'/{name}?v={version}'
 
 def site_path(value):
     """Prefix site-root URLs once, preserving external URLs and query strings."""
@@ -70,7 +75,7 @@ def head(title, description, path, extra=''):
     if re.fullmatch(r'G-[A-Z0-9]+',cfg['ga4Id']):
         gid = cfg['ga4Id']
         analytics = f'<script async src="https://www.googletagmanager.com/gtag/js?id={gid}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag("js",new Date());gtag("config","{gid}");</script>'
-    return f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{esc(title)}</title><meta name="description" content="{esc(description, quote=True)}"><meta name="theme-color" content="#f2efe5"><meta name="site-base-path" content="{esc(base_path, quote=True)}">{robots}{canonical}<meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><meta property="og:site_name" content="肴とお野菜 ひより"><meta property="og:title" content="{esc(title, quote=True)}"><meta property="og:description" content="{esc(description, quote=True)}">{og_img}<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&amp;family=Shippori+Mincho:wght@400;500;600;700;800&amp;display=swap"><link rel="stylesheet" href="/style.css"><script src="/site-paths.js"></script><script src="/common.js" defer></script>{extra}{analytics}</head>'''
+    return f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{esc(title)}</title><meta name="description" content="{esc(description, quote=True)}"><meta name="theme-color" content="#f2efe5"><meta name="site-base-path" content="{esc(base_path, quote=True)}">{robots}{canonical}<meta property="og:type" content="website"><meta property="og:locale" content="ja_JP"><meta property="og:site_name" content="肴とお野菜 ひより"><meta property="og:title" content="{esc(title, quote=True)}"><meta property="og:description" content="{esc(description, quote=True)}">{og_img}<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&amp;family=Shippori+Mincho:wght@400;500;600;700;800&amp;display=swap"><link rel="stylesheet" href="{asset_url('style.css')}"><script src="{asset_url('site-paths.js')}"></script><script src="{asset_url('common.js')}" defer></script>{extra}{analytics}</head>'''
 
 def write_page(path, title, desc, body, home=False, full_footer=True, extra=''):
     target = ROOT / (path.lstrip('/') or 'index.html')

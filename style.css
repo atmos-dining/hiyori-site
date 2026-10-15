@@ -31,3 +31,11 @@
  .noren{animation:noren-scroll 1s linear both;animation-timeline:scroll(root block);animation-range:0px 943px}
 }
 @keyframes noren-scroll{from{transform:translateY(0)}to{transform:translateY(-330px)}}
+
+/* LINE: use ordinary document scrolling and opt-in video playback. */
+html.light-motion{scroll-behavior:auto}
+.light-motion .noren{animation:none;transform:none}
+.light-motion .cloth,.light-motion .scroll-line::before{animation:none}
+.light-motion .hero-image{transform:none}
+.light-motion .reveal{opacity:1;transform:none;transition:none}
+.light-motion .floating-menu,.light-motion .mobile-visit,.light-motion video{transition:none}

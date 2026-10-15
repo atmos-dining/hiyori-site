@@ -1,5 +1,6 @@
 (() => {
   const siteUrl = window.HiyoriSite.url;
+  const lightMotion = window.HiyoriSite.lightMotion;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const drawer = document.querySelector('.menu-drawer');
   const toggles = document.querySelectorAll('[data-menu-toggle]');
@@ -43,7 +44,7 @@
     window.addEventListener('scroll', updateNavigation, { passive: true });
     updateNavigation();
   }
-  if ('IntersectionObserver' in window && !reduceMotion.matches) {
+  if ('IntersectionObserver' in window && !reduceMotion.matches && !lightMotion) {
     document.body.classList.add('motion-ready');
     const reveals = new IntersectionObserver(entries => entries.forEach(entry => {
       if (entry.isIntersecting) { entry.target.classList.add('visible'); reveals.unobserve(entry.target); }
@@ -55,16 +56,20 @@
     const button = video.parentElement.querySelector('[data-video-pause]');
     let manualPause = false;
     let inView = !('IntersectionObserver' in window);
-    const canAnimate = () => !reduceMotion.matches && !navigator.connection?.saveData;
-    const play = () => {
-      if (!canAnimate() || manualPause || document.hidden || !inView) return;
+    const canAnimate = () => !lightMotion && !reduceMotion.matches && !navigator.connection?.saveData;
+    const startPlayback = () => {
       video.play().then(() => { video.classList.add('is-playing'); if (button) button.hidden = false; }).catch(() => {});
     };
+    const play = () => {
+      if (!canAnimate() || manualPause || document.hidden || !inView) return;
+      startPlayback();
+    };
     const syncButton = () => { if (button) { button.textContent = video.paused ? '▶' : 'Ⅱ'; button.setAttribute('aria-label', video.paused ? '動画を再生' : '動画を一時停止'); } };
+    if (lightMotion && button) { button.hidden = false; syncButton(); }
     video.addEventListener('play', syncButton);
     video.addEventListener('pause', syncButton);
     video.addEventListener('error', () => { video.classList.remove('is-playing'); if (button) button.hidden = true; });
-    button?.addEventListener('click', () => { manualPause = !video.paused; if (manualPause) video.pause(); else video.play().catch(() => {}); });
+    button?.addEventListener('click', () => { manualPause = !video.paused; if (manualPause) video.pause(); else startPlayback(); });
     if ('IntersectionObserver' in window) {
       // Fetch once shortly before arrival; playback still waits until the video is visible.
       const prepare = new IntersectionObserver(entries => {
@@ -83,7 +88,14 @@
       }, { threshold: [0, .12] }).observe(video);
     } else play();
     document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); else play(); });
-    reduceMotion.addEventListener('change', () => { if (reduceMotion.matches) { video.pause(); video.classList.remove('is-playing'); if (button) button.hidden = true; } else play(); });
+    reduceMotion.addEventListener('change', () => {
+      if (reduceMotion.matches) {
+        video.pause();
+        video.classList.remove('is-playing');
+        if (button) button.hidden = !lightMotion;
+      } else play();
+      if (lightMotion) syncButton();
+    });
   });
   const roomData = {
     counter: { image:'counter', alt:'調理風景を眺める、ひよりの木のカウンター席', en:'AT THE COUNTER', title:'手仕事が見える、特等席。', text:'料理が仕上がる音や香りも、ごちそうのひとつ。オープンキッチンを目の前に、思い思いの一杯を。' },
