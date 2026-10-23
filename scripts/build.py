@@ -154,7 +154,7 @@ write_page('/access.html','ご来店案内｜肴とお野菜 ひより｜福岡�
 news_body=sub_intro('LETTERS FROM HIYORI','ひより便り','お店からの、小さなお知らせ。')+'<div class="wrap"><section class="journal"><div class="post-list" id="post-list">'+''.join(f'<a href="/blog/posts/post.html?slug={quote(p["slug"])}"><time datetime="{esc(p["date"])}">{esc(p["date"])}</time><h2>{esc(p["title"])}</h2><p>{esc(p["excerpt"])}</p></a>' for p in posts)+'</div></section></div>'
 write_page('/blog/','ひより便り｜肴とお野菜 ひより','天神南・渡辺通の「肴とお野菜 ひより」からのお知らせ。',news_body,extra='<script src="/blog/news.js" defer></script>')
 post_body='<div class="wrap"><div class="breadcrumb"><a href="/">ひより</a><span>/</span><a href="/blog/">ひより便り</a></div><article class="journal article-layout" id="post-content" aria-live="polite"><p>お便りを読み込んでいます。</p><noscript><p>記事の表示にはJavaScriptが必要です。<a href="/blog/">お便り一覧はこちら</a>。</p></noscript></article></div>'
-post_extra='<link rel="stylesheet" href="/blog/article.css"><script src="/vendor/marked/marked.umd.js" defer></script><script src="/blog/post.js" defer></script>'
+post_extra='<link rel="stylesheet" href="/blog/article.css"><script src="/vendor/dompurify/purify.min.js" defer></script><script src="/vendor/blog-security.js" defer></script><script src="/vendor/marked/marked.umd.js" defer></script><script src="/blog/post.js" defer></script>'
 write_page('/blog/posts/post.html','ひより便り｜肴とお野菜 ひより','肴とお野菜 ひよりからのお便り。',post_body,extra=post_extra)
 
 robots = 'User-agent: *\n' + ('Allow: /\n' if indexable else 'Disallow: /\n')

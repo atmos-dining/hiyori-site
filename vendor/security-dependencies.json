@@ -1,0 +1,20 @@
+{
+  "checked_on": "2026-10-24",
+  "dependencies": {
+    "cms": {
+      "url": "https://unpkg.com/@sveltia/cms@0.250.2/dist/sveltia-cms.js",
+      "sri": "sha384-C1+1L3qphgbrAxO2FdF1IFZO8lu9vKwl/r2HKwNT23T2pUQZzDzyXYRAm08skZ3Y",
+      "version": "0.250.2"
+    },
+    "dompurify": {
+      "url": "https://unpkg.com/dompurify@3.4.17/dist/purify.min.js",
+      "sri": "sha384-P0JNneQf81HOl9VwNXK76cQ9VMD6Nfsnepxb0cCOg8+UzEdzgPHAPV4wVQrvYQSx",
+      "version": "3.4.17"
+    },
+    "marked": {
+      "url": "https://unpkg.com/marked@18.1.1/lib/marked.umd.js",
+      "sri": "sha384-rATToyt6602Jnq8c7w8HZwmyOUgPL7mzxX01FBWoV48ns/EgkakGozpES+PnaYOI",
+      "version": "18.1.1"
+    }
+  }
+}

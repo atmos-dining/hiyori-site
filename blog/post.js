@@ -70,7 +70,7 @@
       return body;
     }
     const template = document.createElement('template');
-    template.innerHTML = window.marked.parse(source);
+    template.innerHTML = window.BlogSecurity.sanitizeHTML(window.marked.parse(source));
     const allowed = new Set(['P', 'H2', 'H3', 'H4', 'UL', 'OL', 'LI', 'STRONG', 'EM', 'DEL', 'BR', 'HR', 'BLOCKQUOTE', 'A', 'PRE', 'CODE', 'TABLE', 'THEAD', 'TBODY', 'TR', 'TH', 'TD']);
     function sanitize(node) {
       for (const child of [...node.childNodes]) {

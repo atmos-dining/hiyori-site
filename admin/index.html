@@ -6,6 +6,7 @@
   <meta name="robots" content="noindex,nofollow">
   <meta name="site-base-path" content="">
   <script src="../site-paths.js"></script>
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>ブログ管理画面｜肴とお野菜 ひより</title>
   <style>
     body{margin:0;background:#f2efe5;color:#253b36;font-family:system-ui,sans-serif;line-height:1.9}
@@ -43,7 +44,9 @@
         }
         status.textContent = 'ブログ管理画面を開いています。';
         const script = document.createElement('script');
-        script.src = 'https://unpkg.com/@sveltia/cms@0.241.0/dist/sveltia-cms.js';
+        script.src = 'https://unpkg.com/@sveltia/cms@0.250.2/dist/sveltia-cms.js';
+        script.integrity = 'sha384-C1+1L3qphgbrAxO2FdF1IFZO8lu9vKwl/r2HKwNT23T2pUQZzDzyXYRAm08skZ3Y';
+        script.crossOrigin = 'anonymous';
         script.onerror = () => { status.textContent = '管理画面を読み込めませんでした。通信状況をご確認のうえ、もう一度お試しください。'; };
         document.body.append(script);
       } catch {
