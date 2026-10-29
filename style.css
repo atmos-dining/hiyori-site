@@ -39,3 +39,38 @@ html.light-motion{scroll-behavior:auto}
 .light-motion .hero-image{transform:none}
 .light-motion .reveal{opacity:1;transform:none;transition:none}
 .light-motion .floating-menu,.light-motion .mobile-visit,.light-motion video{transition:none}
+
+/* Selected October photographs: keep food and portrait interiors clearly framed. */
+.intro-photo img{aspect-ratio:4/3;object-position:center}
+.taste-media{aspect-ratio:4/3}
+.veg-gallery{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:-45px}
+.veg-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.room-banner{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.room-banner img{object-position:50% 60%}
+.room-picture img{aspect-ratio:4/5;object-position:50% 65%}
+.space-story img{aspect-ratio:3/4;object-position:center}
+.drink-feature{display:grid;grid-template-columns:1fr 1fr;gap:9%;align-items:center;padding:0 0 100px}
+.drink-feature img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 55%}
+.drink-feature h2{font-size:36px;letter-spacing:.12em;margin-bottom:28px}
+.drink-feature p{font-size:14px}
+.menu-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:35px 24px;padding:50px 0 15px}
+.menu-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.menu-gallery figcaption,.entrance-photo figcaption{font-size:12px;line-height:1.9;margin-top:13px;letter-spacing:.05em}
+.drink-gallery{grid-template-columns:1fr 1fr}
+.access-page .entrance-photo img{aspect-ratio:3/4;object-position:center}
+@media(max-width:700px){
+ .veg-gallery{gap:10px;margin-top:35px;grid-template-columns:1fr 1fr}
+ .veg-gallery figure:first-child{grid-column:1/-1}
+ .room-banner{display:block;height:430px}
+ .room-banner img:nth-of-type(2){display:none}
+ .room-picture img{aspect-ratio:4/5}
+ .space-story img{aspect-ratio:3/4}
+ .drink-feature{grid-template-columns:1fr;gap:30px;padding-bottom:65px}
+ .drink-feature img{aspect-ratio:4/3}
+ .drink-feature h2{font-size:30px}
+ .drink-feature .section-number{margin-bottom:25px}
+ .menu-gallery{grid-template-columns:1fr 1fr;gap:25px 14px;padding:30px 0 10px}
+ .menu-gallery figcaption{font-size:11px;letter-spacing:0}
+ .drink-gallery{grid-template-columns:1fr}
+ .access-page .entrance-photo img{aspect-ratio:3/4}
+}

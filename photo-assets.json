@@ -1,0 +1,287 @@
+{
+  "entrance": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_6.jpg",
+    "width": 1108,
+    "height": 1477,
+    "variants": [
+      {
+        "file": "katsu-entrance-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-entrance-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-entrance-1108.webp",
+        "width": 1108
+      }
+    ]
+  },
+  "counter": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_11.jpg",
+    "width": 1108,
+    "height": 1477,
+    "variants": [
+      {
+        "file": "katsu-counter-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-counter-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-counter-1108.webp",
+        "width": 1108
+      }
+    ]
+  },
+  "tatami": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_12.jpg",
+    "width": 1108,
+    "height": 1477,
+    "variants": [
+      {
+        "file": "katsu-tatami-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-tatami-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-tatami-1108.webp",
+        "width": 1108
+      }
+    ]
+  },
+  "table": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_14.jpg",
+    "width": 1108,
+    "height": 1477,
+    "variants": [
+      {
+        "file": "katsu-table-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-table-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-table-1108.webp",
+        "width": 1108
+      }
+    ]
+  },
+  "dining": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_15.jpg",
+    "width": 1108,
+    "height": 1477,
+    "variants": [
+      {
+        "file": "katsu-dining-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-dining-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-dining-1108.webp",
+        "width": 1108
+      }
+    ]
+  },
+  "sawara": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_72.jpg",
+    "width": 1477,
+    "height": 1108,
+    "variants": [
+      {
+        "file": "katsu-sawara-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-sawara-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-sawara-1477.webp",
+        "width": 1477
+      }
+    ]
+  },
+  "rice": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_52.jpg",
+    "width": 1108,
+    "height": 1477,
+    "variants": [
+      {
+        "file": "katsu-rice-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-rice-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-rice-1108.webp",
+        "width": 1108
+      }
+    ]
+  },
+  "vegetables": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_145.jpg",
+    "width": 1477,
+    "height": 1108,
+    "variants": [
+      {
+        "file": "katsu-vegetables-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-vegetables-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-vegetables-1477.webp",
+        "width": 1477
+      }
+    ]
+  },
+  "vegetable-bowl": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_59.jpg",
+    "width": 1477,
+    "height": 1108,
+    "variants": [
+      {
+        "file": "katsu-vegetable-bowl-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-vegetable-bowl-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-vegetable-bowl-1477.webp",
+        "width": 1477
+      }
+    ]
+  },
+  "sweet-potato": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_119.jpg",
+    "width": 1477,
+    "height": 1108,
+    "variants": [
+      {
+        "file": "katsu-sweet-potato-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-sweet-potato-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-sweet-potato-1477.webp",
+        "width": 1477
+      }
+    ]
+  },
+  "carpaccio": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_138.jpg",
+    "width": 1477,
+    "height": 1108,
+    "variants": [
+      {
+        "file": "katsu-carpaccio-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-carpaccio-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-carpaccio-1477.webp",
+        "width": 1477
+      }
+    ]
+  },
+  "squid": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_17.jpg",
+    "width": 1477,
+    "height": 1108,
+    "variants": [
+      {
+        "file": "katsu-squid-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-squid-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-squid-1477.webp",
+        "width": 1477
+      }
+    ]
+  },
+  "grill": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_131.jpg",
+    "width": 1477,
+    "height": 1108,
+    "variants": [
+      {
+        "file": "katsu-grill-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-grill-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-grill-1477.webp",
+        "width": 1477
+      }
+    ]
+  },
+  "sour": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_167.jpg",
+    "width": 1477,
+    "height": 1108,
+    "variants": [
+      {
+        "file": "katsu-sour-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-sour-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-sour-1477.webp",
+        "width": 1477
+      }
+    ]
+  },
+  "highball": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_5.jpg",
+    "width": 1477,
+    "height": 1108,
+    "variants": [
+      {
+        "file": "katsu-highball-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-highball-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-highball-1477.webp",
+        "width": 1477
+      }
+    ]
+  }
+}

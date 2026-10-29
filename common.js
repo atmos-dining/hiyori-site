@@ -98,16 +98,16 @@
     });
   });
   const roomData = {
-    counter: { image:'counter', alt:'調理風景を眺める、ひよりの木のカウンター席', en:'AT THE COUNTER', title:'手仕事が見える、特等席。', text:'料理が仕上がる音や香りも、ごちそうのひとつ。オープンキッチンを目の前に、思い思いの一杯を。' },
-    table: { image:'room', alt:'木のテーブルと柔らかな照明のテーブル席', en:'AROUND THE TABLE', title:'顔を合わせて、ゆっくりと。', text:'温かな照明と、木の手触り。ふたりでも、気の合う仲間とでも。お皿を囲んで過ごす、いつもの夜に。' },
-    tatami: { image:'tatami', alt:'木の間仕切りに囲まれたひよりのお座敷', en:'A LITTLE MORE RELAXED', title:'靴をぬいで、ひと息。', text:'表情のある木の間仕切りと、落ち着いた畳の席。ゆっくり話したくなる夜にも、どうぞ。' }
+    counter: { image:'katsu-counter', alt:'調理風景を眺める、ひよりの木のカウンター席', en:'AT THE COUNTER', title:'手仕事が見える、特等席。', text:'料理が仕上がる音や香りも、ごちそうのひとつ。オープンキッチンを目の前に、思い思いの一杯を。' },
+    table: { image:'katsu-table', alt:'木のテーブルと柔らかな照明のテーブル席', en:'AROUND THE TABLE', title:'顔を合わせて、ゆっくりと。', text:'温かな照明と、木の手触り。ふたりでも、気の合う仲間とでも。お皿を囲んで過ごす、いつもの夜に。' },
+    tatami: { image:'katsu-tatami', alt:'木の間仕切りに囲まれたひよりのお座敷', en:'A LITTLE MORE RELAXED', title:'靴をぬいで、ひと息。', text:'表情のある木の間仕切りと、落ち着いた畳の席。ゆっくり話したくなる夜にも、どうぞ。' }
   };
   const roomTabs = [...document.querySelectorAll('[data-room]')];
   function selectRoom(button, focus = false) {
     const data = roomData[button.dataset.room];
     roomTabs.forEach(tab => { const active = tab === button; tab.setAttribute('aria-selected',String(active)); tab.tabIndex = active ? 0 : -1; });
     const img = document.getElementById('room-image');
-    if (img) { img.src = siteUrl(`/images/${data.image}-900.webp`); img.srcset = `${siteUrl(`/images/${data.image}-900.webp`)} 900w, ${siteUrl(`/images/${data.image}-1800.webp`)} 1800w`; img.alt = data.alt; }
+    if (img) { img.src = siteUrl(`/images/${data.image}-900.webp`); img.srcset = `${siteUrl(`/images/${data.image}-900.webp`)} 900w, ${siteUrl(`/images/${data.image}-1108.webp`)} 1108w`; img.alt = data.alt; img.className = `photo-${button.dataset.room}`; }
     document.getElementById('room-en').textContent = data.en;
     document.getElementById('room-title').textContent = data.title;
     document.getElementById('room-text').textContent = data.text;
