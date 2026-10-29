@@ -247,59 +247,59 @@
     ]
   },
   "sour": {
-    "source": "LINE_ALBUM_ひよりメニュー写真_261028_167.jpg",
-    "width": 1477,
-    "height": 1108,
+    "source": "AI加工/Hailuo_Image_この商品をグランドメニューに使えるように加工して欲しい。美味_572098252671475714.jpg",
+    "width": 1200,
+    "height": 896,
     "variants": [
       {
-        "file": "katsu-sour-600.webp",
+        "file": "drink-sour-edited-600.webp",
         "width": 600
       },
       {
-        "file": "katsu-sour-900.webp",
+        "file": "drink-sour-edited-900.webp",
         "width": 900
       },
       {
-        "file": "katsu-sour-1477.webp",
-        "width": 1477
+        "file": "drink-sour-edited-1200.webp",
+        "width": 1200
       }
     ]
   },
   "highball": {
-    "source": "LINE_ALBUM_ひよりメニュー写真_261028_5.jpg",
-    "width": 1477,
-    "height": 1108,
+    "source": "AI加工/Hailuo_Image_この商品をグランドメニューに使えるように加工して欲しい。美味_572097643121643525.jpg",
+    "width": 1200,
+    "height": 896,
     "variants": [
       {
-        "file": "katsu-highball-600.webp",
+        "file": "drink-highball-edited-600.webp",
         "width": 600
       },
       {
-        "file": "katsu-highball-900.webp",
+        "file": "drink-highball-edited-900.webp",
         "width": 900
       },
       {
-        "file": "katsu-highball-1477.webp",
-        "width": 1477
+        "file": "drink-highball-edited-1200.webp",
+        "width": 1200
       }
     ]
   },
   "shochu": {
-    "source": "LINE_ALBUM_ひよりメニュー写真_261028_2.jpg",
-    "width": 1108,
-    "height": 1477,
+    "source": "AI加工/Hailuo_Image_この商品をグランドメニューに使えるように加工して欲しい。美味_572097557981466629.jpg",
+    "width": 1200,
+    "height": 896,
     "variants": [
       {
-        "file": "katsu-shochu-600.webp",
+        "file": "drink-shochu-edited-600.webp",
         "width": 600
       },
       {
-        "file": "katsu-shochu-900.webp",
+        "file": "drink-shochu-edited-900.webp",
         "width": 900
       },
       {
-        "file": "katsu-shochu-1108.webp",
-        "width": 1108
+        "file": "drink-shochu-edited-1200.webp",
+        "width": 1200
       }
     ]
   }
