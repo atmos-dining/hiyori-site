@@ -378,5 +378,62 @@
         "width": 1200
       }
     ]
+  },
+  "creative-01": {
+    "source": "AI加工/Hailuo_Image_この商品をグランドメニューに使えるように加工して欲しい。商品_572100106616733697.jpg",
+    "width": 1200,
+    "height": 896,
+    "variants": [
+      {
+        "file": "creative-01-edited-600.webp",
+        "width": 600
+      },
+      {
+        "file": "creative-01-edited-900.webp",
+        "width": 900
+      },
+      {
+        "file": "creative-01-edited-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "creative-02": {
+    "source": "AI加工/Hailuo_Image_この商品をグランドメニューに使えるように加工して欲しい。商品_572099739204067334.jpg",
+    "width": 1200,
+    "height": 896,
+    "variants": [
+      {
+        "file": "creative-02-edited-600.webp",
+        "width": 600
+      },
+      {
+        "file": "creative-02-edited-900.webp",
+        "width": 900
+      },
+      {
+        "file": "creative-02-edited-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "creative-03": {
+    "source": "AI加工/Hailuo_Image_この商品をグランドメニューに使えるように加工して欲しい。商品_572103863542898691.jpg",
+    "width": 1200,
+    "height": 896,
+    "variants": [
+      {
+        "file": "creative-03-edited-600.webp",
+        "width": 600
+      },
+      {
+        "file": "creative-03-edited-900.webp",
+        "width": 900
+      },
+      {
+        "file": "creative-03-edited-1200.webp",
+        "width": 1200
+      }
+    ]
   }
 }
