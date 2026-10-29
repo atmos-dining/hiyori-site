@@ -302,5 +302,62 @@
         "width": 1200
       }
     ]
+  },
+  "food-sawara": {
+    "source": "AI加工/Hailuo_Image_この商品をグランドメニューに使えるように加工して欲しい。商品_572099844892172291.jpg",
+    "width": 1200,
+    "height": 896,
+    "variants": [
+      {
+        "file": "food-sawara-edited-600.webp",
+        "width": 600
+      },
+      {
+        "file": "food-sawara-edited-900.webp",
+        "width": 900
+      },
+      {
+        "file": "food-sawara-edited-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "food-vegetables": {
+    "source": "AI加工/Hailuo_Image_この商品をグランドメニューに使えるように加工して欲しい。美味_572098685976567815.jpg",
+    "width": 1200,
+    "height": 896,
+    "variants": [
+      {
+        "file": "food-vegetables-edited-600.webp",
+        "width": 600
+      },
+      {
+        "file": "food-vegetables-edited-900.webp",
+        "width": 900
+      },
+      {
+        "file": "food-vegetables-edited-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "food-rice": {
+    "source": "AI加工/Hailuo_Image_この商品をグランドメニューに使えるように加工して欲しい。商品_572098839026786304.jpg",
+    "width": 1200,
+    "height": 896,
+    "variants": [
+      {
+        "file": "food-rice-edited-600.webp",
+        "width": 600
+      },
+      {
+        "file": "food-rice-edited-900.webp",
+        "width": 900
+      },
+      {
+        "file": "food-rice-edited-1200.webp",
+        "width": 1200
+      }
+    ]
   }
 }
