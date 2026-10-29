@@ -49,10 +49,10 @@ html.light-motion{scroll-behavior:auto}
 
 .room-picture img{object-position:50% 65%}
 .space-story img{object-position:50% 65%}
-.drink-feature{display:grid;grid-template-columns:1fr 1fr;gap:9%;align-items:center;padding:0 0 100px}
-.drink-feature img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 55%}
-.drink-feature h2{font-size:36px;letter-spacing:.12em;margin-bottom:28px}
-.drink-feature p{font-size:14px}
+
+
+
+
 .menu-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:35px 24px;padding:50px 0 15px}
 .menu-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover}
 .menu-gallery figcaption,.entrance-photo figcaption{font-size:12px;line-height:1.9;margin-top:13px;letter-spacing:.05em}
@@ -63,12 +63,30 @@ html.light-motion{scroll-behavior:auto}
  .veg-gallery figure:first-child{grid-column:1/-1}
 
 
- .drink-feature{grid-template-columns:1fr;gap:30px;padding-bottom:65px}
- .drink-feature img{aspect-ratio:4/3}
- .drink-feature h2{font-size:30px}
- .drink-feature .section-number{margin-bottom:25px}
+
+
+
+
  .menu-gallery{grid-template-columns:1fr 1fr;gap:25px 14px;padding:30px 0 10px}
  .menu-gallery figcaption{font-size:11px;letter-spacing:0}
  .drink-gallery{grid-template-columns:1fr}
  .access-page .entrance-photo img{aspect-ratio:3/4}
+}
+
+/* Drinks lead into the seating section; keep all three photos in landscape frames. */
+.drink-feature{padding:0 0 30px}
+.drink-heading{display:grid;grid-template-columns:1fr 1fr;gap:9%;align-items:center}
+.drink-feature h2{font-size:36px;letter-spacing:.12em}
+.drink-feature p{font-size:14px}
+.drink-photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:48px}
+.drink-photo-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center}
+.drink-photo-grid figcaption{font-size:12px;line-height:1.9;margin-top:13px;letter-spacing:.05em}
+@media(max-width:700px){
+ .drink-feature{padding-bottom:0}
+ .drink-heading{grid-template-columns:1fr;gap:25px}
+ .drink-feature h2{font-size:30px}
+ .drink-feature .section-number{margin-bottom:25px}
+ .drink-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 10px;margin-top:30px}
+ .drink-photo-grid figure:first-child{grid-column:1/-1}
+ .drink-photo-grid figcaption{font-size:11px;letter-spacing:0}
 }

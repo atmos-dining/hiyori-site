@@ -283,5 +283,24 @@
         "width": 1477
       }
     ]
+  },
+  "shochu": {
+    "source": "LINE_ALBUM_ひよりメニュー写真_261028_2.jpg",
+    "width": 1108,
+    "height": 1477,
+    "variants": [
+      {
+        "file": "katsu-shochu-600.webp",
+        "width": 600
+      },
+      {
+        "file": "katsu-shochu-900.webp",
+        "width": 900
+      },
+      {
+        "file": "katsu-shochu-1108.webp",
+        "width": 1108
+      }
+    ]
   }
 }
