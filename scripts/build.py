@@ -144,9 +144,7 @@ def sub_intro(en, title, text):
 
 for section,path,title,en,desc in [('FOOD','/menu.html','お料理','SEASONAL FOOD','香ばしい肴と、ひと工夫のお野菜。<br>お好きなものを、少しずつ。'),('DRINK','/drink.html','お飲み物','A GLASS FOR YOUR EVENING','日本酒、ワイン、果実とハーブのサワー。<br>今日のひと皿に合わせて、お好きな一杯を。')]:
     cats=[(i,c) for i,c in enumerate(menus) if c['section']==section]
-    picks = [('sawara','藁と柑橘を添えたサワラの藁焼き','香りを楽しむ、名物のひと皿。'),('vegetables','彩り豊かな野菜料理','お野菜に、ひと工夫。'),('carpaccio','鮮魚と野菜を盛り付けたひと皿','目にもおいしい、肴を。'),('squid','緑の器に盛り付けたイカの料理','一杯がすすむ、温かな肴。'),('grill','香ばしく焼き上げた肉料理','お肉のお料理も。'),('rice','土鍋で炊いた白いご飯','締めくくりは、炊き立てを。')] if section=='FOOD' else [('sour','大葉を添えたグラスドリンク','爽やかな一杯を。'),('highball','デュワーズと氷を満たしたグラス','いつものお好きな一杯も。')]
-    gallery = '<div class="wrap menu-gallery ' + ('food-gallery' if section=='FOOD' else 'drink-gallery') + '" aria-label="' + title + 'の写真">' + ''.join(photo_figure(name,alt,caption) for name,alt,caption in picks) + '</div>'
-    body=sub_intro(en,title,desc) + gallery + '<div class="wrap"><nav class="menu-categories" aria-label="お品書きの分類">' + ''.join(f'<a href="#category-{i}">{esc(c["name"])}</a>' for i,c in cats) + '</nav><p class="menu-note">仕入れや季節により、内容が変わることがございます。</p><div class="menu-columns">'
+    body=sub_intro(en,title,desc) + '<div class="wrap"><nav class="menu-categories" aria-label="お品書きの分類">' + ''.join(f'<a href="#category-{i}">{esc(c["name"])}</a>' for i,c in cats) + '</nav><p class="menu-note">仕入れや季節により、内容が変わることがございます。</p><div class="menu-columns">'
     for i,c in cats:
         body += f'<section class="menu-category" id="category-{i}"><h2>{esc(c["name"])}</h2><ul class="menu-items">'
         for item in c['items']:
