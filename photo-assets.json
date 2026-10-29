@@ -359,5 +359,24 @@
         "width": 1200
       }
     ]
+  },
+  "about-carpaccio": {
+    "source": "AI加工/Hailuo_Image_この商品をグランドメニューに使えるように加工して欲しい。商品_572101287787266049.png",
+    "width": 1200,
+    "height": 896,
+    "variants": [
+      {
+        "file": "about-carpaccio-edited-600.webp",
+        "width": 600
+      },
+      {
+        "file": "about-carpaccio-edited-900.webp",
+        "width": 900
+      },
+      {
+        "file": "about-carpaccio-edited-1200.webp",
+        "width": 1200
+      }
+    ]
   }
 }
