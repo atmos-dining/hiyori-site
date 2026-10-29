@@ -9,7 +9,7 @@
     if (!drawer) return;
     if (open) previousFocus = document.activeElement;
     drawer.hidden = !open;
-    document.querySelectorAll('main, .site-header, .floating-menu, .access-section, .footer, .mobile-visit').forEach(el => { el.inert = open; });
+    document.querySelectorAll('main, .site-header, .floating-menu, .floating-reservation, .access-section, .footer, .mobile-visit').forEach(el => { el.inert = open; });
     document.body.classList.toggle('menu-open', open);
     toggles.forEach(button => button.setAttribute('aria-expanded', String(open)));
     if (open) drawer.querySelector('button, a')?.focus();

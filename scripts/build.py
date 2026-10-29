@@ -57,11 +57,17 @@ def photo_figure(name, alt, caption='', cls=''):
     label = f'<figcaption>{esc(caption)}</figcaption>' if caption else ''
     return f'<figure class="{cls}">{photo(name, alt)}{label}</figure>'
 
+def reservation_link(cls=''):
+    if not cfg['reservationUrl']:
+        return ''
+    return f'<a class="reservation-button {cls}" data-reservation href="{esc(cfg["reservationUrl"], quote=True)}" target="_blank" rel="noopener noreferrer"><span>お席を予約する</span><span aria-hidden="true">↗</span></a>'
+
 def header():
-    return '''<span class="scroll-sentinel" aria-hidden="true"></span><a class="skip" href="#main">本文へ進む</a>
-<header class="site-header"><a href="/" class="brand-small" aria-label="肴とお野菜 ひより トップ"><span class="seal" aria-hidden="true">日</span><span class="brand-word">ひより</span></a><div class="header-right"><a class="header-visit" href="/access.html">ご来店案内</a><button class="menu-toggle" data-menu-toggle aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu"><span></span><span></span></button></div></header>
+    return f'''<span class="scroll-sentinel" aria-hidden="true"></span><a class="skip" href="#main">本文へ進む</a>
+<header class="site-header"><a href="/" class="brand-small" aria-label="肴とお野菜 ひより トップ"><span class="seal" aria-hidden="true">日</span><span class="brand-word">ひより</span></a><div class="header-right"><a class="header-visit" href="/access.html">ご来店案内</a>{reservation_link('header-reservation')}<button class="menu-toggle" data-menu-toggle aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu"><span></span><span></span></button></div></header>
+{reservation_link('floating-reservation')}
 <button class="menu-toggle floating-menu" data-menu-toggle aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu"><span></span><span></span></button>
-<div class="menu-drawer" id="site-menu" role="dialog" aria-modal="true" aria-label="サイトメニュー" hidden><button class="menu-toggle drawer-close" data-menu-toggle aria-label="メニューを閉じる" aria-expanded="true" aria-controls="site-menu"><span></span><span></span></button><div class="drawer-brand" aria-hidden="true">ひより</div><div><nav class="drawer-links" aria-label="メインナビゲーション">''' + ''.join(f'<a href="{u}"><small>0{i}</small>{t}</a>' for i,(u,t) in enumerate(links,1)) + '''<a href="/blog/"><small>06</small>ひより便り</a></nav><div class="drawer-bottom">肴とお野菜 ひより<br>福岡・天神南 / 渡辺通</div></div></div>'''
+<div class="menu-drawer" id="site-menu" role="dialog" aria-modal="true" aria-label="サイトメニュー" hidden><button class="menu-toggle drawer-close" data-menu-toggle aria-label="メニューを閉じる" aria-expanded="true" aria-controls="site-menu"><span></span><span></span></button><div class="drawer-brand" aria-hidden="true">ひより</div><div><nav class="drawer-links" aria-label="メインナビゲーション">''' + ''.join(f'<a href="{u}"><small>0{i}</small>{t}</a>' for i,(u,t) in enumerate(links,1)) + f'''<a href="/blog/"><small>06</small>ひより便り</a></nav>{reservation_link('drawer-reservation')}<div class="drawer-bottom">肴とお野菜 ひより<br>福岡・天神南 / 渡辺通</div></div></div>'''
 
 def details():
     rows = [('店名', cfg['name']), ('所在地', cfg['address'])]
@@ -74,13 +80,11 @@ def details():
     return out + '</dl>'
 
 def visit_links():
-    out = f'<a class="map-link" data-map href="{map_url}" target="_blank" rel="noopener noreferrer">Googleで店舗情報を見る<span aria-hidden="true">↗</span></a>'
-    if cfg['reservationUrl']:
-        out += f'<a class="map-link" data-reservation href="{esc(cfg["reservationUrl"], quote=True)}" target="_blank" rel="noopener noreferrer">お席を予約する<span aria-hidden="true">↗</span></a>'
-    return out
+    return reservation_link('visit-reservation') + f'<a class="map-link" data-map href="{map_url}" target="_blank" rel="noopener noreferrer">Googleマップで場所を見る<span aria-hidden="true">↗</span></a>'
 
 def footer(full=True):
-    return (f'''<section class="access-section" id="access"><div class="wrap access-grid"><div><div class="section-number">ご来店案内</div><h2>今夜、ひよりで。</h2><p class="store-title">肴とお野菜 ひより</p><p>天神南、渡辺通。<br>暖簾の向こうで、お待ちしています。</p></div><div>{details()}{visit_links()}</div></div></section>''' if full else '') + '''<footer class="footer"><div class="wrap footer-inner"><nav class="footer-links" aria-label="フッターナビゲーション">''' + ''.join(f'<a href="{u}">{t}</a>' for u,t in links) + '''<a href="/blog/">ひより便り</a></nav><span>© HIYORI. ALL RIGHTS RESERVED.</span></div></footer><a class="mobile-visit" href="/access.html"><span>天神南で、ひより。</span><span>ご来店案内&nbsp; ↗</span></a>'''
+    mobile_visit = f'<nav class="mobile-visit mobile-booking" aria-label="ご来店・ご予約"><a href="/access.html">ご来店案内</a>{reservation_link("mobile-reservation")}</nav>' if cfg['reservationUrl'] else '<a class="mobile-visit" href="/access.html"><span>天神南で、ひより。</span><span>ご来店案内&nbsp; ↗</span></a>'
+    return (f'''<section class="access-section" id="access"><div class="wrap access-grid"><div><div class="section-number">ご来店案内</div><h2>今夜、ひよりで。</h2><p class="store-title">肴とお野菜 ひより</p><p>天神南、渡辺通。<br>暖簾の向こうで、お待ちしています。</p></div><div>{details()}{visit_links()}</div></div></section>''' if full else '') + '''<footer class="footer"><div class="wrap footer-inner"><nav class="footer-links" aria-label="フッターナビゲーション">''' + ''.join(f'<a href="{u}">{t}</a>' for u,t in links) + '''<a href="/blog/">ひより便り</a></nav><span>© HIYORI. ALL RIGHTS RESERVED.</span></div></footer>''' + mobile_visit
 
 def head(title, description, path, extra=''):
     canonical = f'<link rel="canonical" id="canonical-link" href="{esc(site_url+path, quote=True)}"><meta property="og:url" id="og-url" content="{esc(site_url+path, quote=True)}">' if site_url else ''

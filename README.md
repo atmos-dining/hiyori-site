@@ -6,6 +6,7 @@
 
 - 公開リポジトリ：[atmos-dining/hiyori-site](https://github.com/atmos-dining/hiyori-site)（作成済み・public）
 - 公開準備用URL：[ひよりのサイト](https://atmos-dining.github.io/hiyori-site/)
+- お客様向け予約ページ：[ひよりのネット予約](https://pos-reserve.vercel.app/s/hiyori/book)
 - 記事管理画面：[Sveltia CMS](https://atmos-dining.github.io/hiyori-site/admin/)
 - 公開履歴・エラー確認：[GitHub Actions](https://github.com/atmos-dining/hiyori-site/actions)
 
@@ -58,17 +59,16 @@ python3 scripts/build.py
 
 ## 未確定の店舗情報
 
-提供されたGoogleの店舗情報URLは設定済みです。次の項目は推測せず空欄にしています。
+電話番号 `092-401-5788`、店舗を直接表示するGoogleマップのURL、お客様向け予約URLは設定済みです。予約ボタンは全ページの右上・メニュー内・ご来店案内に表示し、スクロール中はPCの右上、スマートフォンの下部からも利用できます。予約リンクは `site-config.json` の `reservationUrl` に集約しています。次の項目は推測せず空欄にしています。
 
 | キー | 内容 |
 | --- | --- |
-| `telephone` / `hours` / `closed` | 電話番号・営業時間・定休日 |
-| `reservationUrl` | 正式な予約ページURL |
+| `hours` / `closed` | 営業時間・定休日 |
 | `origin` | ローカル設定の公開URL。現在は空欄を維持 |
 | `ga4Id` | Google Analytics 4の測定ID |
 | `heroVideo` / `fireVideo` / `riceVideo` | 追加撮影する動画の指定 |
 
-電話番号・営業時間・定休日・予約URLは、確定値を入力して再生成すると表示に反映されます。GA4は有効な測定IDを設定するまで読み込みません。メニュー価格は提供資料の数値です。**税込・税別は未確認**のため、正式公開前に店舗側で価格と税表記を確定してください。
+営業時間・定休日は、確定値を入力して再生成すると表示に反映されます。GA4は有効な測定IDを設定するまで読み込みません。予約ボタンは既存の `reservation_click` 計測に対応しています。メニュー価格は提供資料の数値です。**税込・税別は未確認**のため、正式公開前に店舗側で価格と税表記を確定してください。
 
 ## 正式公開へ切り替える
 
