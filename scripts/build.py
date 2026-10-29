@@ -91,6 +91,12 @@ def footer(full=True):
 
 def head(title, description, path, extra=''):
     canonical = f'<link rel="canonical" id="canonical-link" href="{esc(site_url+path, quote=True)}"><meta property="og:url" id="og-url" content="{esc(site_url+path, quote=True)}">' if site_url else ''
+    breadcrumb_labels = dict(links + [('/blog/', 'ひより便り'), ('/privacy.html', 'プライバシーポリシー')])
+    if site_url and path in breadcrumb_labels and path != '/':
+        breadcrumb = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': cfg['name'], 'item': site_url + '/'},
+            {'@type': 'ListItem', 'position': 2, 'name': breadcrumb_labels[path], 'item': site_url + path}]}
+        extra += '<script type="application/ld+json">' + json.dumps(breadcrumb, ensure_ascii=False).replace('<', '\\u003c') + '</script>'
     robots = '' if indexable else '<meta name="robots" content="noindex,nofollow">'
     og_img = f'<meta property="og:image" content="{esc(site_url, quote=True)}/images/room-1800.webp">' if site_url else ''
     analytics = ''
@@ -144,7 +150,7 @@ home = f'''<section class="hero" aria-label="肴とお野菜 ひよりへよう�
 restaurant = {'@context':'https://schema.org','@type':'Restaurant','name':cfg['name'],'servesCuisine':['和食','居酒屋'],'address':{'@type':'PostalAddress','addressCountry':'JP','addressRegion':'福岡県','addressLocality':'福岡市中央区','streetAddress':'渡辺通5丁目24-37 2F'}}
 restaurant.update({'hasMap':cfg['mapUrl'], 'acceptsReservations':cfg['reservationUrl'], 'openingHoursSpecification':[{'@type':'OpeningHoursSpecification','dayOfWeek':['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],'opens':'17:00','closes':'00:00'}]})
 if cfg['telephone']: restaurant['telephone'] = cfg['telephone']
-if site_url: restaurant.update({'url':site_url+'/', 'menu':site_url+'/menu.html','image':site_url+'/images/room-1800.webp'})
+if site_url: restaurant.update({'@id':site_url+'/#restaurant', 'url':site_url+'/', 'sameAs':[cfg['mapUrl']], 'menu':site_url+'/menu.html','image':site_url+'/images/room-1800.webp'})
 write_page('/', '肴とお野菜 ひより｜天神南・渡辺通の和食居酒屋', '福岡・天神南の「肴とお野菜 ひより」。お席で仕上げるサワラの藁焼き、ひと工夫の野菜料理、炊き立て土鍋ご飯。木の温もりに包まれるカウンター・テーブル・お座敷で、くつろぎのひとときを。', home, home=True, extra='<script type="application/ld+json">'+json.dumps(restaurant,ensure_ascii=False)+'</script><script src="/blog/news.js" defer></script>')
 
 def sub_intro(en, title, text):
@@ -161,19 +167,22 @@ for section,path,title,en,desc in [('FOOD','/menu.html','お料理','SEASONAL FO
     other='/drink.html' if section=='FOOD' else '/menu.html'
     other_label='お飲み物を見る' if section=='FOOD' else 'お料理を見る'
     body+=f'</div><div class="menu-switch"><a class="text-link" href="{other}">{other_label}<span class="arrow" aria-hidden="true">→</span></a></div></div>'
-    write_page(path,f'{title}｜肴とお野菜 ひより｜天神南',f'肴とお野菜 ひよりの{title}。'+re.sub('<[^>]+>','',desc),body)
+    seo = {
+        'FOOD': ('お料理・野菜料理とサワラの藁焼き｜肴とお野菜 ひより｜天神南', '天神南・渡辺通の和食居酒屋「肴とお野菜 ひより」のお料理と価格。サワラの藁焼き、トマトやナスの創作野菜料理、炊き立て土鍋ご飯をご紹介。ネット予約もこちらから。'),
+        'DRINK': ('お飲み物・日本酒とサワー｜肴とお野菜 ひより｜天神南', '天神南・渡辺通の「肴とお野菜 ひより」のドリンクメニューと価格。日本酒、ワイン、果実とハーブのサワー、ハイボールなど、お料理に合わせてお選びいただけます。')}
+    write_page(path, *seo[section], body)
 
 space_body=sub_intro('A PLACE TO UNWIND','お席と空間','ひとりで、ふたりで、みんなで。<br>その日の気分に寄り添う、ひよりのお席。')+'<div class="wrap space-stories">'
 for im,en,title,copy in [('counter','01 / COUNTER','手仕事が見える、特等席。','目の前は、オープンキッチン。仕上がる料理を眺めながら、ひと皿と一杯をゆっくりと。'),('table','02 / TABLE','顔を合わせて、ゆっくりと。','木のテーブルを囲んで、お皿を分け合う。気の合う人と過ごす夜に、柔らかな灯りのお席を。'),('tatami','03 / TATAMI','靴をぬいで、ひと息。','木の間仕切りに囲まれた、落ち着いたお座敷。いつもより少し長く、話していたくなる場所。')]:
     alt={'counter':'厨房を目の前にした木のカウンター席','table':'木の格子と照明が温かなテーブル席','tatami':'座布団と低いテーブルを備えたお座敷'}[im]
     space_body+=f'<section class="space-story reveal"><div class="space-story-photo">{image("counter",alt,"photo-counter") if im == "counter" else photo("dining" if im == "table" else im,alt)}</div><div><div class="eyebrow">{en}</div><h2>{title}</h2><p>{copy}</p></div></section>'
 space_body+='</div>'
-write_page('/space.html','お席と空間｜肴とお野菜 ひより｜天神南', 'ひよりの店内をご紹介。調理風景を楽しむカウンター、木のテーブル席、落ち着いたお座敷をご用意しています。',space_body)
+write_page('/space.html','カウンター・テーブル・お座敷｜肴とお野菜 ひより｜天神南', '天神南・渡辺通の和食居酒屋「肴とお野菜 ひより」の店内とお席。調理風景を楽しめるカウンター、テーブル席、お座敷を写真でご紹介。お席のネット予約も承ります。',space_body)
 
 faqs=[('営業時間と定休日を教えてください。','営業時間は17:00〜24:00、定休日はありません。臨時の変更はGoogleマップの店舗情報をご確認ください。'),('ネット予約はできますか？','各ページの「お席を予約する」から、お客様向けの予約ページをご利用いただけます。お電話は092-401-5788です。'),('どのような料理がありますか？','お席で仕上げるサワラの藁焼き、トマトやナスなどの創作野菜料理、炊き立ての土鍋ご飯をご用意しています。'),('どのような席がありますか？','カウンター席、テーブル席、お座敷がございます。店内の雰囲気は「お席と空間」のページでご覧いただけます。'),('お店はどこにありますか？',cfg['address']+'にございます。Googleの店舗情報もあわせてご確認ください。')]
 access_body=sub_intro('COME ON IN','ご来店案内','いい日も、なんでもない日も。<br>暖簾の向こうで、お待ちしています。')+f'<div class="wrap"><section class="access-page"><div>{photo_figure("entrance","木の看板と格子戸が目印のひよりの入口","この看板を目印に、お越しください。","entrance-photo")}</div><div>{details()}{visit_links()}<p class="menu-note">最新の営業情報は、Googleの店舗情報をご確認ください。</p></div></section><section class="faq"><h2>よくあるご質問</h2>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in faqs)+'</section></div>'
 faq_schema={'@context':'https://schema.org','@type':'FAQPage','mainEntity':[{'@type':'Question','name':q,'acceptedAnswer':{'@type':'Answer','text':a}} for q,a in faqs]}
-write_page('/access.html','ご来店案内｜肴とお野菜 ひより｜福岡市中央区渡辺通', '肴とお野菜 ひよりの店舗情報。福岡市中央区渡辺通5丁目24-37 2F。ご来店の前に店内・お料理・Googleの最新情報をご確認ください。',access_body,full_footer=False,extra='<script type="application/ld+json">'+json.dumps(faq_schema,ensure_ascii=False)+'</script>')
+write_page('/access.html','アクセス・営業時間・ご予約｜肴とお野菜 ひより｜天神南・渡辺通', '肴とお野菜 ひよりのアクセス・営業時間・ネット予約。福岡市中央区渡辺通5丁目24-37 2F。17:00〜24:00、定休日なし。電話092-401-5788。店舗の地図と入口写真をご案内します。',access_body,full_footer=False,extra='<script type="application/ld+json">'+json.dumps(faq_schema,ensure_ascii=False)+'</script>')
 
 privacy_body=sub_intro('PRIVACY POLICY','プライバシーポリシー','当サイトの情報の取り扱いについて。')+'''<article class="wrap privacy-copy"><h2>お問い合わせの情報</h2><p>肴とお野菜 ひより（株式会社アトモス）は、お問い合わせなどでお預かりする情報を、ご連絡・ご対応のために利用します。</p><h2>アクセス解析について</h2><p>当サイトは、利用状況の把握とサイトの改善のため、Google Analytics 4を利用しています。Google AnalyticsはCookieなどを使用して、閲覧したページや操作、端末・ブラウザに関する情報を収集します。当サイトから氏名・メールアドレスなど、お客様を直接特定する情報をGoogle Analyticsへ送信することはありません。</p><p>「お席を予約する」や電話リンクのクリックも計測します。この計測は、予約の成立や通話の内容を記録するものではありません。</p><p>Googleによるデータの利用については、<a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener noreferrer">Googleの説明</a>をご確認ください。ブラウザの設定でCookieを無効にするほか、<a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank" rel="noopener noreferrer">Google Analyticsオプトアウト アドオン</a>を利用して計測を無効にできます。</p><h2>お問い合わせ先</h2><p>肴とお野菜 ひより<br>福岡県福岡市中央区渡辺通5丁目24-37 2F<br>電話：<a href="tel:0924015788">092-401-5788</a></p></article>'''
 write_page('/privacy.html','プライバシーポリシー｜肴とお野菜 ひより','ひより公式サイトのアクセス解析と情報の取り扱いについて。',privacy_body,full_footer=False)
