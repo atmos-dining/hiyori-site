@@ -26,24 +26,24 @@
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   });
-  // Only update navigation when crossing the threshold. The curtain is CSS-driven.
-  let scrolled;
-  function setScrolled(next) {
-    if (scrolled === next) return;
-    scrolled = next;
-    document.body.classList.toggle('scrolled', next);
+  // Keep navigation available; show booking controls after the entire hero has passed.
+  function observePassed(element, className) {
+    const update = passed => document.body.classList.toggle(className, passed);
+    if (element && 'IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        const entry = entries[entries.length - 1];
+        update(!entry.isIntersecting && entry.boundingClientRect.bottom <= 0);
+      }).observe(element);
+    } else {
+      const check = () => update(element ? element.getBoundingClientRect().bottom <= 0 : window.scrollY > 170);
+      window.addEventListener('scroll', check, { passive: true });
+      window.addEventListener('resize', check);
+      check();
+    }
   }
   const sentinel = document.querySelector('.scroll-sentinel');
-  if (sentinel && 'IntersectionObserver' in window) {
-    new IntersectionObserver(entries => {
-      const entry = entries[entries.length - 1];
-      setScrolled(!entry.isIntersecting && entry.boundingClientRect.bottom <= 0);
-    }).observe(sentinel);
-  } else {
-    const updateNavigation = () => setScrolled(window.scrollY > 170);
-    window.addEventListener('scroll', updateNavigation, { passive: true });
-    updateNavigation();
-  }
+  observePassed(sentinel, 'scrolled');
+  observePassed(document.querySelector('.hero') || sentinel, 'reservation-visible');
   if ('IntersectionObserver' in window && !reduceMotion.matches && !lightMotion) {
     document.body.classList.add('motion-ready');
     const reveals = new IntersectionObserver(entries => entries.forEach(entry => {
