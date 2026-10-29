@@ -12,6 +12,9 @@ site_url = os.environ.get('SITE_URL', cfg.get('origin', '')).strip().rstrip('/')
 base_path = urlsplit(site_url).path.rstrip('/')
 indexable_env = os.environ.get('SITE_INDEXABLE')
 indexable = indexable_env == 'true' if indexable_env is not None else cfg.get('indexable', bool(cfg.get('origin')))
+# Pages may report http while provisioning the custom-domain certificate.
+if indexable and site_url.startswith('http://'):
+    site_url = 'https://' + site_url[len('http://'):]
 esc = html.escape
 map_url = esc(cfg['mapUrl'], quote=True)
 links = [('/', 'ひよりについて'), ('/menu.html', 'お料理'), ('/drink.html', 'お飲み物'), ('/space.html', 'お席と空間'), ('/access.html', 'ご来店案内')]

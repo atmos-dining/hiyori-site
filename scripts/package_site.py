@@ -21,6 +21,8 @@ for name in ('index.html', 'config.yml'):
     shutil.copy2(ROOT / 'admin' / name, OUT / 'admin' / name)
 # The CMS reads repository-relative image paths; keep /images stable across domains.
 site_url = os.environ.get('SITE_URL', '').rstrip('/')
+if os.environ.get('SITE_INDEXABLE') == 'true' and site_url.startswith('http://'):
+    site_url = 'https://' + site_url[len('http://'):]
 if site_url:
     from urllib.parse import urlsplit
     base_path = urlsplit(site_url).path.rstrip('/')
