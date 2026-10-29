@@ -30,8 +30,8 @@ jobs:
       - name: Build pages and sitemap
         env:
           SITE_URL: ${{ steps.pages.outputs.base_url }}
-          # Enable after the final domain and store information are confirmed.
-          SITE_INDEXABLE: 'false'
+          # Public launch on the confirmed custom domain.
+          SITE_INDEXABLE: 'true'
         run: |
           python3 scripts/build.py
           python3 scripts/package_site.py

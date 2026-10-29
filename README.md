@@ -5,14 +5,14 @@
 ## 公開・管理画面の状態
 
 - 公開リポジトリ：[atmos-dining/hiyori-site](https://github.com/atmos-dining/hiyori-site)（作成済み・public）
-- 公開準備用URL：[ひよりのサイト](https://atmos-dining.github.io/hiyori-site/)
+- 本番URL：[ひよりのサイト](https://sakanatooyasai-hiyori.com/)
 - お客様向け予約ページ：[ひよりのネット予約](https://pos-reserve.vercel.app/s/hiyori/book)
-- 記事管理画面：[Sveltia CMS](https://atmos-dining.github.io/hiyori-site/admin/)
+- 記事管理画面：[Sveltia CMS](https://sakanatooyasai-hiyori.com/admin/)
 - 公開履歴・エラー確認：[GitHub Actions](https://github.com/atmos-dining/hiyori-site/actions)
 
 GitHub Pagesの公開元はGitHub Actionsに設定済みです。`admin/config.yml` は上記リポジトリへ接続し、既存の共通OAuthプロキシを使用します。`main` へのpushでページ生成とPagesへの公開を行う構成です。**2026年10月15日、公開URLでの表示、CMSへのGitHubログイン、既存記事の保存、保存後の自動公開まで確認済みです。**
 
-GitHubのURLは `noindex` を付けた公開準備用です。これは検索掲載を抑える指定であり、アクセス制限ではありません。ひより用の独自ドメインは未設定・未定です。この作業ではドメインの取得・契約は行っていません。
+本番ドメインは `sakanatooyasai-hiyori.com` です（Xserverでユーザー取得）。GitHub Pagesの独自ドメインとして公開し、検索掲載を許可します。
 
 ## ローカルで見る
 
@@ -57,30 +57,29 @@ python3 scripts/build.py
 
 画像は `images/` に保存し、CMSの `public_folder` は `/images` を維持します。記事データにGitHub Pagesのリポジトリ名を埋め込まず、表示時に `HiyoriSite.url` で `/hiyori-site` を補います。独自ドメインへ移る際も同じ記事データを使います。
 
-## 未確定の店舗情報
+## 店舗情報と計測
 
 電話番号 `092-401-5788`、営業時間 `17:00〜24:00`、定休日 `なし`、店舗を直接表示するGoogleマップのURL、お客様向け予約URLは設定済みです。営業時間・定休日は2026年10月29日にGoogleマップの曜日別営業時間（月〜日）で確認しました。予約ボタンはメニュー内・ご来店案内に表示し、スマートフォンのトップでは暖簾の右下に縦書きで配置しています。追従ボタンはHEROを通り過ぎてからPCの右上・スマートフォンの下部に表示します（下層ページは従来のスクロール位置で表示）。予約リンクは `site-config.json` の `reservationUrl` に集約しています。次の項目は推測せず空欄にしています。
 
 | キー | 内容 |
 | --- | --- |
 | `origin` | ローカル設定の公開URL。現在は空欄を維持 |
-| `ga4Id` | Google Analytics 4の測定ID |
+
 | `heroVideo` / `fireVideo` / `riceVideo` | 追加撮影する動画の指定 |
 
-営業時間などの変更時は、設定を更新して再生成してください。GA4は有効な測定IDを設定するまで読み込みません。予約ボタンは既存の `reservation_click` 計測に対応しています。メニュー価格は提供資料の数値です。**税込・税別は未確認**のため、正式公開前に店舗側で価格と税表記を確定してください。
+営業時間などの変更時は、設定を更新して再生成してください。GA4測定IDは `G-3QDBXSNRTM`、プロパティIDは `561442335`、ウェブストリームIDは `16226986150` です。予約ボタンは既存の `reservation_click` 計測に対応しています。メニュー価格は提供資料の数値です。**税込・税別は未確認**のため、正式公開前に店舗側で価格と税表記を確定してください。
 
-## 正式公開へ切り替える
+## 独自ドメインでの公開
 
-ActionsではGitHub Pagesから取得した公開URLを環境変数 `SITE_URL` としてbuildへ渡します。`site-config.json` の `origin` は空欄のままです。現在のworkflowは `SITE_INDEXABLE: 'false'` で、canonical・共有用URLには公開準備用URLを使い、検索掲載は抑えます。ローカルも `origin` 空欄のため `noindex` です。
+ActionsはGitHub Pagesの公開URLを環境変数 `SITE_URL` としてbuildへ渡します。`site-config.json` の `origin` は空欄を維持し、workflowは `SITE_INDEXABLE: 'true'` です。ローカルだけで通常のbuildを実行すると `noindex` になります。本番と同じ生成結果を確認するときは次を使用します。
 
-正式公開時は、店舗情報・メニュー価格と税表記・掲載内容を確認したうえで、次を行います。
+```sh
+SITE_URL=https://sakanatooyasai-hiyori.com SITE_INDEXABLE=true python3 scripts/build.py
+```
 
-1. 使用する独自ドメインを決め、GitHub Pages・DNS・HTTPSを設定する。
-2. `admin/config.yml` の `site_url` を正式なURLへ変更する。
-3. `.github/workflows/pages.yml` の `SITE_INDEXABLE` を `'true'` にして公開する。
-4. 公開サイト、管理画面、記事、画像、canonical・共有用URL・`robots.txt`・サイトマップを確認する。
+canonical・OG URL・robots・サイトマップは本番URLへ統一し、実在するページと記事URLだけを掲載します。営業時間をRestaurant構造化データへ設定し、来店案内に表示したFAQとFAQPage構造化データを揃えています。GA4は全ページで読み込み、電話・予約・地図リンクを計測します。アクセス解析の案内は `/privacy.html` にあります。
 
-サイトマップはbuild時に記事データから自動生成します。URLだけを変更しても公開・検索掲載の確認まで完了したことにはなりません。
+Search Consoleはドメインプロパティを使用し、サイトマップには `https://sakanatooyasai-hiyori.com/sitemap.xml` のフルURLを送信します。CMSの許可ドメインは共通OAuth Workerの `ALLOWED_DOMAINS` で管理します。
 
 ## 動画の差し替え
 

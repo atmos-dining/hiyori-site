@@ -5,8 +5,8 @@ backend:
   branch: main
   base_url: https://sveltia-cms-auth.atmos-nextgen-team.workers.dev
 
-site_url: https://atmos-dining.github.io/hiyori-site
-display_url: https://atmos-dining.github.io/hiyori-site
+site_url: https://sakanatooyasai-hiyori.com
+display_url: https://sakanatooyasai-hiyori.com
 locale: ja
 
 media_folder: images

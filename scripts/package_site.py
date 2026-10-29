@@ -8,7 +8,7 @@ OUT = ROOT / '_site'
 if OUT.exists():
     shutil.rmtree(OUT)
 OUT.mkdir()
-for name in ('index.html', 'menu.html', 'drink.html', 'space.html', 'access.html',
+for name in ('index.html', 'menu.html', 'drink.html', 'space.html', 'access.html', 'privacy.html',
              'style.css', 'common.js', 'site-paths.js', 'favicon.svg', 'robots.txt', '.nojekyll'):
     shutil.copy2(ROOT / name, OUT / name)
 for name in ('sitemap.xml', 'CNAME'):

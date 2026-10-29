@@ -84,7 +84,7 @@ def visit_links():
 
 def footer(full=True):
     mobile_visit = f'<nav class="mobile-visit mobile-booking" aria-label="ご来店・ご予約"><a href="/access.html">ご来店案内</a>{reservation_link("mobile-reservation")}</nav>' if cfg['reservationUrl'] else '<a class="mobile-visit" href="/access.html"><span>天神南で、ひより。</span><span>ご来店案内&nbsp; ↗</span></a>'
-    return (f'''<section class="access-section" id="access"><div class="wrap access-grid"><div><div class="section-number">ご来店案内</div><h2>今夜、ひよりで。</h2><p class="store-title">肴とお野菜 ひより</p><p>天神南、渡辺通。<br>暖簾の向こうで、お待ちしています。</p></div><div>{details()}{visit_links()}</div></div></section>''' if full else '') + '''<footer class="footer"><div class="wrap footer-inner"><nav class="footer-links" aria-label="フッターナビゲーション">''' + ''.join(f'<a href="{u}">{t}</a>' for u,t in links) + '''<a href="/blog/">ひより便り</a></nav><span>© HIYORI. ALL RIGHTS RESERVED.</span></div></footer>''' + mobile_visit
+    return (f'''<section class="access-section" id="access"><div class="wrap access-grid"><div><div class="section-number">ご来店案内</div><h2>今夜、ひよりで。</h2><p class="store-title">肴とお野菜 ひより</p><p>天神南、渡辺通。<br>暖簾の向こうで、お待ちしています。</p></div><div>{details()}{visit_links()}</div></div></section>''' if full else '') + '''<footer class="footer"><div class="wrap footer-inner"><nav class="footer-links" aria-label="フッターナビゲーション">''' + ''.join(f'<a href="{u}">{t}</a>' for u,t in links) + '''<a href="/blog/">ひより便り</a><a href="/privacy.html">プライバシーポリシー</a></nav><span>© HIYORI. ALL RIGHTS RESERVED.</span></div></footer>''' + mobile_visit
 
 def head(title, description, path, extra=''):
     canonical = f'<link rel="canonical" id="canonical-link" href="{esc(site_url+path, quote=True)}"><meta property="og:url" id="og-url" content="{esc(site_url+path, quote=True)}">' if site_url else ''
@@ -139,6 +139,7 @@ home = f'''<section class="hero" aria-label="肴とお野菜 ひよりへよう�
 <section class="news-section wrap"><h2>ひより便り</h2><div id="home-news">{home_news}</div></section>'''
 
 restaurant = {'@context':'https://schema.org','@type':'Restaurant','name':cfg['name'],'servesCuisine':['和食','居酒屋'],'address':{'@type':'PostalAddress','addressCountry':'JP','addressRegion':'福岡県','addressLocality':'福岡市中央区','streetAddress':'渡辺通5丁目24-37 2F'}}
+restaurant.update({'hasMap':cfg['mapUrl'], 'acceptsReservations':cfg['reservationUrl'], 'openingHoursSpecification':[{'@type':'OpeningHoursSpecification','dayOfWeek':['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],'opens':'17:00','closes':'00:00'}]})
 if cfg['telephone']: restaurant['telephone'] = cfg['telephone']
 if site_url: restaurant.update({'url':site_url+'/', 'menu':site_url+'/menu.html','image':site_url+'/images/room-1800.webp'})
 write_page('/', '肴とお野菜 ひより｜天神南・渡辺通の和食居酒屋', '福岡・天神南の「肴とお野菜 ひより」。お席で仕上げるサワラの藁焼き、ひと工夫の野菜料理、炊き立て土鍋ご飯。木の温もりに包まれるカウンター・テーブル・お座敷で、くつろぎのひとときを。', home, home=True, extra='<script type="application/ld+json">'+json.dumps(restaurant,ensure_ascii=False)+'</script><script src="/blog/news.js" defer></script>')
@@ -166,10 +167,13 @@ for im,en,title,copy in [('counter','01 / COUNTER','手仕事が見える、特�
 space_body+='</div>'
 write_page('/space.html','お席と空間｜肴とお野菜 ひより｜天神南', 'ひよりの店内をご紹介。調理風景を楽しむカウンター、木のテーブル席、落ち着いたお座敷をご用意しています。',space_body)
 
-faqs=[('どのような料理がありますか？','お席で仕上げるサワラの藁焼き、トマトやナスなどの創作野菜料理、炊き立ての土鍋ご飯をご用意しています。'),('どのような席がありますか？','カウンター席、テーブル席、お座敷がございます。店内の雰囲気は「お席と空間」のページでご覧いただけます。'),('お店はどこにありますか？',cfg['address']+'にございます。Googleの店舗情報もあわせてご確認ください。')]
+faqs=[('営業時間と定休日を教えてください。','営業時間は17:00〜24:00、定休日はありません。臨時の変更はGoogleマップの店舗情報をご確認ください。'),('ネット予約はできますか？','各ページの「お席を予約する」から、お客様向けの予約ページをご利用いただけます。お電話は092-401-5788です。'),('どのような料理がありますか？','お席で仕上げるサワラの藁焼き、トマトやナスなどの創作野菜料理、炊き立ての土鍋ご飯をご用意しています。'),('どのような席がありますか？','カウンター席、テーブル席、お座敷がございます。店内の雰囲気は「お席と空間」のページでご覧いただけます。'),('お店はどこにありますか？',cfg['address']+'にございます。Googleの店舗情報もあわせてご確認ください。')]
 access_body=sub_intro('COME ON IN','ご来店案内','いい日も、なんでもない日も。<br>暖簾の向こうで、お待ちしています。')+f'<div class="wrap"><section class="access-page"><div>{photo_figure("entrance","木の看板と格子戸が目印のひよりの入口","この看板を目印に、お越しください。","entrance-photo")}</div><div>{details()}{visit_links()}<p class="menu-note">最新の営業情報は、Googleの店舗情報をご確認ください。</p></div></section><section class="faq"><h2>よくあるご質問</h2>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in faqs)+'</section></div>'
 faq_schema={'@context':'https://schema.org','@type':'FAQPage','mainEntity':[{'@type':'Question','name':q,'acceptedAnswer':{'@type':'Answer','text':a}} for q,a in faqs]}
 write_page('/access.html','ご来店案内｜肴とお野菜 ひより｜福岡市中央区渡辺通', '肴とお野菜 ひよりの店舗情報。福岡市中央区渡辺通5丁目24-37 2F。ご来店の前に店内・お料理・Googleの最新情報をご確認ください。',access_body,full_footer=False,extra='<script type="application/ld+json">'+json.dumps(faq_schema,ensure_ascii=False)+'</script>')
+
+privacy_body=sub_intro('PRIVACY POLICY','プライバシーポリシー','当サイトの情報の取り扱いについて。')+'''<article class="wrap privacy-copy"><h2>お問い合わせの情報</h2><p>肴とお野菜 ひより（株式会社アトモス）は、お問い合わせなどでお預かりする情報を、ご連絡・ご対応のために利用します。</p><h2>アクセス解析について</h2><p>当サイトは、利用状況の把握とサイトの改善のため、Google Analytics 4を利用しています。Google AnalyticsはCookieなどを使用して、閲覧したページや操作、端末・ブラウザに関する情報を収集します。当サイトから氏名・メールアドレスなど、お客様を直接特定する情報をGoogle Analyticsへ送信することはありません。</p><p>「お席を予約する」や電話リンクのクリックも計測します。この計測は、予約の成立や通話の内容を記録するものではありません。</p><p>Googleによるデータの利用については、<a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener noreferrer">Googleの説明</a>をご確認ください。ブラウザの設定でCookieを無効にするほか、<a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank" rel="noopener noreferrer">Google Analyticsオプトアウト アドオン</a>を利用して計測を無効にできます。</p><h2>お問い合わせ先</h2><p>肴とお野菜 ひより<br>福岡県福岡市中央区渡辺通5丁目24-37 2F<br>電話：<a href="tel:0924015788">092-401-5788</a></p></article>'''
+write_page('/privacy.html','プライバシーポリシー｜肴とお野菜 ひより','ひより公式サイトのアクセス解析と情報の取り扱いについて。',privacy_body,full_footer=False)
 
 news_body=sub_intro('LETTERS FROM HIYORI','ひより便り','お店からの、小さなお知らせ。')+'<div class="wrap"><section class="journal"><div class="post-list" id="post-list">'+''.join(f'<a href="/blog/posts/post.html?slug={quote(p["slug"])}"><time datetime="{esc(p["date"])}">{esc(p["date"])}</time><h2>{esc(p["title"])}</h2><p>{esc(p["excerpt"])}</p></a>' for p in posts)+'</div></section></div>'
 write_page('/blog/','ひより便り｜肴とお野菜 ひより','天神南・渡辺通の「肴とお野菜 ひより」からのお知らせ。',news_body,extra='<script src="/blog/news.js" defer></script>')
@@ -181,9 +185,9 @@ robots = 'User-agent: *\n' + ('Allow: /\n' if indexable else 'Disallow: /\n')
 if site_url: robots += f'Sitemap: {site_url}/sitemap.xml\n'
 (ROOT/'robots.txt').write_text(robots)
 if site_url:
-    urls=['/','/menu.html','/drink.html','/space.html','/access.html','/blog/']+[f'/blog/posts/post.html?slug={quote(p["slug"])}' for p in posts]
+    urls=['/','/menu.html','/drink.html','/space.html','/access.html','/privacy.html','/blog/']+[f'/blog/posts/post.html?slug={quote(p["slug"])}' for p in posts]
     (ROOT/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+esc(site_url+u)+'</loc></url>' for u in urls)+'</urlset>')
 elif (ROOT/'sitemap.xml').exists():
     (ROOT/'sitemap.xml').unlink()
 (ROOT/'.nojekyll').touch()
-print(f'Built 7 static pages, {sum(len(c["items"]) for c in menus)} menu items; site URL: {site_url or "local preview"}; indexable: {indexable}')
+print(f'Built 8 static pages, {sum(len(c["items"]) for c in menus)} menu items; site URL: {site_url or "local preview"}; indexable: {indexable}')
